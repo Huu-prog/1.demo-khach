@@ -1,46 +1,32 @@
 /* ==========================================================================
-       1. CẤU HÌNH BIẾN MÀU SẮC ĐỎ - VÀNG HOÀNG GIA (RED & GOLD THEME)
-       ========================================================================== */
+   1. CẤU HÌNH BIẾN CHUNG (CSS VARIABLES) & RESET
+   ========================================================================== */
 :root {
-  /* Đường dẫn ảnh Intro cánh cửa (Đặt file ảnh cùng thư mục file html này) */
-  --intro-bg-image: url("https://i.pinimg.com/736x/d5/53/82/d553827ba517bc0a62341c2c1bf2a857.jpg");
-
-  --bg-red-dark: #4a0307;
-  --bg-red-main: #8a0d13;
-  --bg-card-red: #6e070d;
-  --color-gold: #f5d77f;
-  --color-gold-bright: #ffe699;
-  --color-gold-dark: #c59b27;
-  --text-light: #fff8ec;
-  --text-muted: #eccaa0;
-  --gold-gradient: linear-gradient(
-    135deg,
-    #d4af37 0%,
-    #fff2a3 50%,
-    #aa7c11 100%
-  );
-  --gold-border-glow: 0 0 18px rgba(245, 215, 127, 0.35);
-  --font-title: "Cormorant Garamond", serif;
-  --font-body: "Plus Jakarta Sans", sans-serif;
-  --transition-smooth: all 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+  --font-main: 'Plus Jakarta Sans', 'Montserrat', sans-serif;
+  --font-title: 'Cormorant Garamond', 'Playfair Display', serif;
+  --font-script: 'Alex Brush', cursive;
+  
+  --color-gold: #d4af37;
+  --color-gold-dark: #c5a059;
+  --color-red-deep: #580511;
+  --color-red-main: #6b0c18;
+  --color-bg-card: #fffdf9;
+  --text-dark: #1a1a1a;
+  --text-muted: #555555;
+  --text-light: #ffffff;
 }
 
-* {
+*, *::before, *::after {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
 }
-html {
-  scroll-behavior: smooth;
-  font-size: 16px;
-}
 
 body {
-  background-color: var(--bg-red-dark);
-  background-image: radial-gradient(circle at center, #9b111e 0%, #4a0307 100%);
-  color: var(--text-light);
-  font-family: var(--font-body);
-  line-height: 1.7;
+  font-family: var(--font-main);
+  background-color: #121212;
+  color: var(--text-dark);
+  line-height: 1.6;
   overflow-x: hidden;
 }
 
@@ -48,521 +34,492 @@ body.no-scroll {
   overflow: hidden;
 }
 
-/* Thanh cuộn mạ vàng */
-::-webkit-scrollbar {
-  width: 8px;
-}
-::-webkit-scrollbar-track {
-  background: var(--bg-red-dark);
-}
-::-webkit-scrollbar-thumb {
-  background: var(--color-gold-dark);
-  border-radius: 4px;
-}
-
-/* ==========================================================================
-       2. HẠT KIM TUYẾN VÀNG RƠI NỀN (CANVAS PARTICLES)
-       ========================================================================== */
 #particle-canvas {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
-  z-index: 1;
-}
-
-/* ==========================================================================
-       3. INTRO CÁNH CỬA MỞ 3D (3D DOUBLE DOOR OVERLAY)
-       ========================================================================== */
-/* ==========================================
-   HIỆU ỨNG CÁNH CỬA MỜ 3D (CLICK TRỰC TIẾP LÊN CỬA)
-   ========================================== */
-.door-overlay {
   position: fixed;
   top: 0;
   left: 0;
   width: 100vw;
   height: 100vh;
-  z-index: 99999;
-  background: #120000;
-  overflow: hidden;
-  cursor: pointer; /* Hiện con trỏ bàn tay báo hiệu bấm được */
-  transition: opacity 0.8s ease, visibility 0.8s ease;
+  pointer-events: none;
+  z-index: 1;
 }
 
-/* Khung tạo không gian 3D */
+/* ==========================================================================
+   2. INTRO CÁNH CỬA 3D & NÚT PHÁT NHẠC
+   ========================================================================== */
+.door-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: rgba(0, 0, 0, 0.85);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: opacity 1s ease, visibility 1s ease;
+}
+
+.door-overlay.closed {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
 .door-frame {
-  position: relative;
   width: 100%;
   height: 100%;
   display: flex;
-  align-items: center;
-  justify-content: center;
-  perspective: 1400px; /* Độ sâu không gian 3D */
-  transform-style: preserve-3d;
+  perspective: 1200px;
 }
 
-/* --- TẠO MẶT CÁNH CỬA 3D --- */
 .door {
-  position: absolute;
-  top: 0;
-  width: 50vw;
-  height: 100vh;
-  background: linear-gradient(135deg, #7a0000 0%, #3a0000 100%);
-  box-sizing: border-box;
-  z-index: 2;
-  transition: transform 1.4s cubic-bezier(0.7, 0, 0.2, 1);
-  box-shadow: 0 0 30px rgba(0, 0, 0, 0.8);
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(135deg, #4a000b, #2b0006);
+  border: 4px solid var(--color-gold);
+  position: relative;
+  transition: transform 1.2s cubic-bezier(0.77, 0, 0.175, 1);
 }
 
-/* Khung hoa văn chỉ viền trên cửa */
-.door::before {
-  content: "";
-  position: absolute;
-  inset: 25px;
-  border: 2px solid rgba(255, 215, 0, 0.4);
-  box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.6);
-  border-radius: 8px;
-}
+.door-left { transform-origin: left center; }
+.door-right { transform-origin: right center; }
 
-/* Bản lề xoay 3D */
-.door-left {
-  left: 0;
-  border-right: 2px solid #ffd700;
-  transform-origin: left center; /* Xoay quanh mép trái */
-}
+.door-overlay.closed .door-left { transform: rotateY(-100deg); }
+.door-overlay.closed .door-right { transform: rotateY(100deg); }
 
-.door-right {
-  right: 0;
-  border-left: 2px solid #ffd700;
-  transform-origin: right center; /* Xoay quanh mép phải */
-}
-
-/* Tay nắm cửa mạ vàng */
 .door-handle {
   position: absolute;
   top: 50%;
-  width: 12px;
-  height: 70px;
-  background: linear-gradient(180deg, #ffe082, #c69214);
-  border-radius: 6px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+  width: 20px;
+  height: 60px;
+  background: var(--color-gold);
+  border-radius: 10px;
   transform: translateY(-50%);
+  box-shadow: 0 0 10px rgba(0,0,0,0.5);
 }
 .left-handle { right: 15px; }
 .right-handle { left: 15px; }
 
-/* ==========================================
-   KÍCH HOẠT XOAY 3D KHI BẤM MỞ
-   ========================================== */
-/* Cửa trái xoay 3D ra sau góc -105 độ */
-.door-overlay.opened .door-left {
-  transform: rotateY(-105deg);
-}
-
-/* Cửa phải xoay 3D ra sau góc 105 độ */
-.door-overlay.opened .door-right {
-  transform: rotateY(105deg);
-}
-
-/* Hide toàn bộ Overlay sau khi animation kết thúc */
-.door-overlay.opened {
-  opacity: 0;
-  visibility: hidden;
-  pointer-events: none;
-  transition-delay: 1s;
-}
-
-/* ==========================================================================
-       4. BỐ CỤC NỘI DUNG CHÍNH (MAIN INVITATION WRAPPER)
-       ========================================================================== */
-.wrapper {
-  position: relative;
-  z-index: 2;
-  max-width: 760px;
-  margin: 0 auto;
-  padding: 25px 15px;
-}
-
-section {
-  background-image: url("https://i.pinimg.com/736x/b6/7e/32/b67e329a34597d77582d6e671b779d42.jpg");
-  background-size: cover; /* Hoặc dùng 100% 100% nếu muốn thấy trọn vẹn cả đèn lồng lẫn khung dưới */
-  background-position: center;
-  background-repeat: no-repeat;
- 
-  margin-bottom: 35px;
-  padding: 45px 25px;
-  border-radius: 16px;
-  text-align: center;
-  position: relative;
-  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
-  border: 1px solid var(--color-gold-dark);
-  overflow: hidden;
-}
-
-/* Viền kim loại phát sáng nhẹ */
-section::before {
-    
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  border-radius: 16px;
-  padding: 1px;
-  background: linear-gradient(
-    135deg,
-    rgba(245, 215, 127, 0.5),
-    transparent,
-    rgba(245, 215, 127, 0.3)
-  );
-  -webkit-mask:
-    linear-gradient(#fff 0 0) content-box,
-    linear-gradient(#fff 0 0);
-  -webkit-mask-composite: xor;
-  mask-composite: exclude;
-  pointer-events: none;
-  
-}
-
-/* Họa tiết trang trí line-art */
-.ornament {
+.music-btn {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 1000;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--color-gold);
+  color: #fff;
+  border: none;
+  cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 15px;
-  margin: 15px auto 25px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
 }
 
-.ornament-line {
-  height: 1px;
-  width: 60px;
-  background: linear-gradient(
-    90deg,
-    transparent,
-    var(--color-gold),
-    transparent
-  );
+/* ==========================================================================
+   3. BỐ CỤC CHÍNH (WRAPPER & SECTION)
+   ========================================================================== */
+.wrapper {
+  position: relative;
+  z-index: 2;
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 20px 15px;
 }
 
-.ornament-icon {
-  color: var(--color-gold);
-  font-size: 1.2rem;
+section {
+  background-image: url("https://scontent.fsgn5-11.fna.fbcdn.net/v/t1.15752-9/805751537_1066112409363327_2415468385918812769_n.png?stp=dst-png_p720x720&_nc_cat=110&ccb=1-7&_nc_sid=0024fc&_nc_ohc=ifXsC7UQTLIQ7kNvwHpAVVf&_nc_oc=AdovYPCm6Lcw7TcNUVYupZ5oXwUG6WyHTwU8LHrqU5s8cSYmQqg5j1ECKN3ngwiy-w8cER3LIdCBaDvrAC1Oo1sc&_nc_ad=z-m&_nc_cid=1229&_nc_zt=23&_nc_ht=scontent.fsgn5-11.fna&_nc_ss=7a22e&oh=03_Q7cD6QF3O2MUSzpjtTR9YVapfWM9ln_NO8k4_lkOfWkMZibu6w&oe=6ACE39DB");
+  background-size: cover;
+  background-position: center;
+  margin-bottom: 35px;
+  padding: 30px 20px;
+  border-radius: 16px;
+  text-align: center;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+  border: 1px solid var(--color-gold-dark);
 }
 
 .section-subtitle {
   font-size: 0.85rem;
-  letter-spacing: 3px;
-  text-transform: uppercase;
-  color: var(--color-gold);
-  font-weight: 600;
-  margin-bottom: 6px;
+  letter-spacing: 2px;
+  color: var(--color-gold-dark);
+  font-weight: 700;
 }
 
 .section-title {
   font-family: var(--font-title);
-  font-size: 2.3rem;
-  color: var(--text-light);
-  font-weight: 700;
-  line-height: 1.25;
+  font-size: clamp(1.8rem, 4vw, 2.4rem);
+  color: var(--color-red-main);
+  margin-top: 4px;
 }
 
-/* --- CALENDAR STYLES --- */
-.calendar-card {
-  max-width: 320px;
-  margin: 25px auto;
-  background: #fff8f0;
-  border-radius: 12px;
-  overflow: hidden;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
-  border: 1px solid #e0c896;
-  font-family: inherit;
-}
-
-.calendar-header {
-  background: #6b0000;
-  color: #f7e1a0;
+/* Họa tiết trang trí */
+.ornament {
   display: flex;
-  justify-content: space-between;
-  padding: 12px 20px;
-  font-size: 1.1rem;
-  font-weight: bold;
-  letter-spacing: 1px;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin: 12px 0 24px;
 }
 
-.calendar-body {
-  padding: 15px;
-  color: #333333;
+.ornament-line {
+  height: 1px;
+  width: 50px;
+  background: var(--color-gold-dark);
 }
 
-.calendar-weekdays {
-  display: grid;
-  grid-template-columns: repeat(7, 1fr);
-  text-align: center;
-  font-weight: bold;
+.ornament-icon {
+  color: var(--color-gold-dark);
+  font-size: 0.9rem;
+}
+
+/* ==========================================================================
+   4. SECTION 1: HERO THIỆP MỜI TÂN GIA (ĐÃ TỐI ƯU HOÀN CHỈNH)
+   ========================================================================== */
+.hero-section-split {
+  padding: 12px;
+}
+
+.hero-card-container {
+  display: flex;
+  flex-direction: row;
+  background-color: var(--color-bg-card);
+  border-radius: 12px;
+  border: 2px solid var(--color-gold);
+  overflow: hidden;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+.hero-content-left {
+  flex: 1.1;
+  padding: 35px 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.hero-image-right {
+  flex: 0.9;
+  min-height: 320px;
+  position: relative;
+}
+
+.hero-house-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* Tiêu đề Lồng Chữ */
+.invitation-header {
+  position: relative;
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+.title-main {
+  font-family: var(--font-title);
+  font-size: clamp(2rem, 5vw, 2.8rem);
+  font-weight: 700;
+  color: var(--color-red-main);
+  letter-spacing: 2px;
+  line-height: 1;
+}
+
+.title-script {
+  font-family: var(--font-script);
+  font-size: clamp(2.8rem, 7vw, 3.8rem);
+  color: var(--text-dark);
+  position: absolute;
+  top: 8px;
+  left: 50%;
+  transform: translateX(-50%);
+  white-space: nowrap;
+  pointer-events: none;
+}
+
+/* Băng Rôn Kính Mời */
+.banner-invite {
+  width: 100%;
+  max-width: 340px;
+  background: var(--color-red-deep);
+  padding: 8px 12px;
+  border-top: 2px solid var(--color-gold);
+  border-bottom: 2px solid var(--color-gold);
+  margin-bottom: 20px;
+}
+
+.banner-sub {
+  font-size: 0.7rem;
+  letter-spacing: 1.5px;
+  color: #f3e5ab;
+  font-weight: 600;
+}
+
+.banner-guest {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--text-light);
+  text-transform: uppercase;
+}
+
+/* Chi tiết Thời Gian / Địa Điểm Hero */
+.invitation-body {
+  width: 100%;
+  max-width: 360px;
+}
+
+.invite-line {
   font-size: 0.85rem;
-  color: #8b0000;
-  border-bottom: 1px solid #e8d3b0;
-  padding-bottom: 8px;
+  color: var(--text-muted);
+  font-style: italic;
+}
+
+.invite-highlight {
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+  color: var(--text-dark);
   margin-bottom: 8px;
 }
 
-.calendar-days {
-  display: grid;
-  grid-template-columns: repeat(7, 1fr);
-  text-align: center;
-  row-gap: 8px;
-  font-size: 0.95rem;
-  align-items: center;
-}
-
-.calendar-days div {
-  height: 36px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-/* Đánh dấu ngày 19 bằng Trái Tim */
-.active-day {
-  position: relative;
-  font-weight: bold;
-  color: #ffffff !important;
-}
-
-.active-day .day-num {
-  position: relative;
-  z-index: 2;
-}
-
-.active-day .heart-mark {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  font-size: 1.8rem;
-  z-index: 1;
-}
-/* ==========================================================================
-       5. SCROLL REVEAL ANIMATION
-       ========================================================================== */
-.reveal {
-    
-  opacity: 0;
-  transform: translateY(35px);
-  transition:
-    opacity 0.8s cubic-bezier(0.25, 1, 0.5, 1),
-    transform 0.8s cubic-bezier(0.25, 1, 0.5, 1);
-}
-
-.reveal.active {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-/* ==========================================================================
-       6. CÁC SECTION NỘI DUNG CHÍNH
-       ========================================================================== */
-
-/* Hero Section */
-.hero-section {
-    background-image: url("https://i.pinimg.com/736x/b6/7e/32/b67e329a34597d77582d6e671b779d42.jpg");
-  background-size: cover; /* Hoặc dùng 100% 100% nếu muốn thấy trọn vẹn cả đèn lồng lẫn khung dưới */
-  background-position: center;
-  background-repeat: no-repeat;
-  padding: 60px 25px;
-  
-}
-
-.hero-tag {
-  font-size: 0.85rem;
-  letter-spacing: 4px;
-  text-transform: uppercase;
-  color: var(--color-gold);
-  margin-bottom: 12px;
-}
-
-.hero-hosts {
-  font-family: var(--font-title);
-  font-size: clamp(2.2rem, 5vw, 3.2rem);
+.invite-time {
+  font-size: 1.1rem;
   font-weight: 700;
-  margin: 10px 0;
-  background: var(--gold-gradient);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+  color: var(--color-red-main);
 }
 
-.hero-desc {
-  font-size: 1.15rem;
-  color: var(--text-muted);
-  font-style: italic;
-  font-family: var(--font-title);
+.invite-date {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--text-dark);
+  margin-bottom: 16px;
 }
 
-/* Invitation Guest Box */
+.invite-location {
+  border-top: 1px dashed rgba(212, 175, 55, 0.5);
+  padding-top: 12px;
+}
+
+.location-label {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--color-red-main);
+}
+
+.location-venue {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--text-dark);
+}
+
+.location-address {
+  font-size: 0.88rem;
+  color: #222222;
+  font-weight: 500;
+}
+
+/* ==========================================================================
+   5. SECTION 2 & 6: KHÁCH MỜI & LỜI TRI ÂN
+   ========================================================================== */
 .invitation-guest-box {
-  background: rgba(245, 215, 127, 0.1);
-  border-left: 3px solid var(--color-gold);
-  padding: 15px 20px;
-  margin: 25px 0;
-  border-radius: 0 8px 8px 0;
+  background: rgba(255, 253, 249, 0.9);
+  padding: 15px;
+  border-radius: 8px;
+  border: 1px solid var(--color-gold);
   display: inline-block;
-  text-align: left;
+  margin-bottom: 20px;
 }
 
 .guest-label {
-  font-size: 0.8rem;
+  font-size: 0.85rem;
   color: var(--text-muted);
-  text-transform: uppercase;
-  letter-spacing: 1.5px;
 }
 
 .guest-name {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--color-red-main);
+}
+
+.invitation-text, .host-quote {
+  font-size: 1rem;
+  color: #333333;
+  line-height: 1.7;
+  max-width: 680px;
+  margin: 0 auto;
+}
+
+.host-quote {
+  font-style: italic;
   font-family: var(--font-title);
-  font-size: 1.8rem;
-  color: var(--color-gold-bright);
+  font-size: 1.2rem;
+}
+
+/* ==========================================================================
+   6. SECTION 3: LỊCH & ĐẾM NGƯỢC
+   ========================================================================== */
+.calendar-card {
+  background: var(--color-bg-card);
+  border: 1px solid var(--color-gold);
+  border-radius: 10px;
+  max-width: 320px;
+  margin: 0 auto 25px;
+  padding: 15px;
+}
+
+.calendar-header {
+  font-family: var(--font-title);
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--color-red-main);
+  margin-bottom: 10px;
+}
+
+.calendar-weekdays, .calendar-days {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 5px;
+  font-size: 0.85rem;
+}
+
+.calendar-weekdays div {
+  font-weight: 700;
+  color: var(--color-gold-dark);
+}
+
+.calendar-days div {
+  padding: 6px 0;
+  position: relative;
+}
+
+.active-day {
+  background: var(--color-red-main);
+  color: var(--text-light);
+  border-radius: 50%;
   font-weight: 700;
 }
 
-.invitation-text {
-  color: var(--text-light);
-  font-size: 1.05rem;
-  max-width: 620px;
-  margin: 0 auto;
-  line-height: 1.8;
+.heart-mark {
+  position: absolute;
+  top: -6px;
+  right: -2px;
+  font-size: 0.6rem;
 }
 
-/* Event Details Grid */
+/* Details Grid */
 .details-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
-  gap: 18px;
-  margin: 30px 0 20px;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 15px;
+  margin-bottom: 25px;
 }
 
 .detail-card {
-  background: rgba(40, 3, 6, 0.6);
-  padding: 22px 15px;
-  border-radius: 10px;
-  border: 1px solid rgba(245, 215, 127, 0.25);
+  background: rgba(255, 253, 249, 0.9);
+  padding: 15px;
+  border-radius: 8px;
+  border: 1px solid var(--color-gold-dark);
 }
 
 .detail-icon {
-  width: 42px;
-  height: 42px;
-  background: rgba(245, 215, 127, 0.15);
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin: 0 auto 12px;
-  color: var(--color-gold);
+  color: var(--color-red-main);
+  margin-bottom: 5px;
 }
 
 .detail-title {
-  font-size: 0.8rem;
-  text-transform: uppercase;
-  letter-spacing: 1.5px;
-  color: var(--text-muted);
-  margin-bottom: 6px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--color-gold-dark);
 }
 
 .detail-val {
-  font-family: var(--font-title);
-  font-size: 1.3rem;
-  font-weight: 700;
-  color: var(--text-light);
-}
-
-.map-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  margin-top: 15px;
-  padding: 12px 28px;
-  background: transparent;
-  border: 1.5px solid var(--color-gold);
-  color: var(--color-gold);
-  border-radius: 30px;
-  text-decoration: none;
-  font-weight: 600;
   font-size: 0.9rem;
-  transition: var(--transition-smooth);
+  font-weight: 600;
+  color: var(--text-dark);
 }
 
-.map-btn:hover {
-  background: var(--color-gold);
-  color: #3b0003;
-  transform: translateY(-2px);
-}
-
-/* Countdown Timer Box */
+/* Countdown */
 .countdown-title {
-  font-family: var(--font-title);
-  font-size: 1.3rem;
-  color: var(--text-muted);
-  margin-top: 35px;
-  margin-bottom: 15px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+  margin-bottom: 12px;
+  color: var(--color-red-main);
 }
 
 .countdown-container {
   display: flex;
   justify-content: center;
   gap: 12px;
-  flex-wrap: wrap;
 }
 
 .time-box {
-  background: #3b0105;
+  background: var(--color-red-deep);
   color: var(--text-light);
-  min-width: 72px;
-  padding: 12px 6px;
+  padding: 10px;
   border-radius: 8px;
-  border: 1px solid var(--color-gold-dark);
-  box-shadow: var(--gold-border-glow);
+  min-width: 65px;
+  border: 1px solid var(--color-gold);
 }
 
 .time-val {
-  font-family: var(--font-title);
-  font-size: 1.8rem;
+  font-size: 1.3rem;
   font-weight: 700;
-  color: var(--color-gold-bright);
-  line-height: 1;
 }
 
 .time-label {
-  font-size: 0.68rem;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  color: var(--text-muted);
-  margin-top: 4px;
+  font-size: 0.65rem;
+  color: #f3e5ab;
 }
 
-/* House Gallery Grid */
+/* ==========================================================================
+   7. BẢN ĐỒ, GALLERY, RSVP & MODAL
+   ========================================================================== */
+/* Map Button */
+.map-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--color-red-main);
+  color: var(--text-light);
+  padding: 10px 20px;
+  border-radius: 20px;
+  text-decoration: none;
+  font-size: 0.85rem;
+  font-weight: 600;
+  margin-top: 15px;
+  transition: background 0.3s;
+}
+
+.map-btn:hover {
+  background: var(--color-red-deep);
+}
+
+/* Gallery Grid */
 .gallery-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 15px;
-  margin-top: 25px;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 12px;
 }
 
 .gallery-item {
   position: relative;
-  border-radius: 10px;
+  border-radius: 8px;
   overflow: hidden;
-  aspect-ratio: 4 / 3;
-  border: 1px solid var(--color-gold-dark);
   cursor: pointer;
+  height: 160px;
+  border: 1px solid var(--color-gold);
 }
 
 .gallery-item img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: transform 0.6s ease;
+  transition: transform 0.4s;
 }
 
 .gallery-item:hover img {
@@ -572,325 +529,157 @@ section::before {
 .gallery-caption {
   position: absolute;
   bottom: 0;
-  left: 0;
-  right: 0;
-  background: linear-gradient(transparent, rgba(20, 2, 4, 0.85));
-  color: var(--text-light);
-  padding: 12px 10px;
-  font-size: 0.85rem;
-  opacity: 0;
-  transition: opacity 0.3s ease;
-}
-
-.gallery-item:hover .gallery-caption {
-  opacity: 1;
-}
-
-/* Host Message Quote */
-.host-quote {
-  font-family: var(--font-title);
-  font-size: 1.35rem;
-  font-style: italic;
-  color: var(--text-light);
-  line-height: 1.8;
-  max-width: 600px;
-  margin: 0 auto;
-  position: relative;
-  padding: 0 15px;
-}
-
-.host-quote::before {
-  content: "“";
-  font-size: 4rem;
-  color: var(--color-gold);
-  opacity: 0.3;
-  position: absolute;
-  top: -20px;
-  left: -10px;
+  inset-x: 0;
+  background: rgba(0,0,0,0.6);
+  color: #fff;
+  font-size: 0.75rem;
+  padding: 6px;
 }
 
 /* RSVP Form */
 .rsvp-form {
-  max-width: 500px;
-  margin: 25px auto 0;
+  max-width: 480px;
+  margin: 0 auto;
   text-align: left;
 }
 
 .form-group {
-  margin-bottom: 20px;
+  margin-bottom: 15px;
 }
 
 .form-label {
   display: block;
-  font-size: 0.88rem;
-  font-weight: 500;
-  color: var(--text-light);
-  margin-bottom: 6px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  margin-bottom: 5px;
+  color: var(--text-dark);
 }
 
-.form-input,
-.form-select,
-.form-textarea {
+.form-input, .form-select, .form-textarea {
   width: 100%;
-  padding: 12px 16px;
-  border: 1px solid rgba(245, 215, 127, 0.4);
-  border-radius: 8px;
-  background: rgba(30, 2, 4, 0.7);
-  font-family: var(--font-body);
-  font-size: 0.95rem;
-  color: var(--text-light);
-  outline: none;
-  transition: border-color 0.3s;
-}
-
-.form-input:focus,
-.form-select:focus,
-.form-textarea:focus {
-  border-color: var(--color-gold);
-  box-shadow: 0 0 10px rgba(245, 215, 127, 0.3);
+  padding: 10px 12px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-family: var(--font-main);
+  font-size: 0.9rem;
 }
 
 .radio-group {
   display: flex;
-  gap: 20px;
-  margin-top: 8px;
+  gap: 15px;
 }
 
 .radio-label {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  font-size: 0.9rem;
+  font-size: 0.85rem;
   cursor: pointer;
-  color: var(--text-light);
 }
 
 .submit-btn {
   width: 100%;
-  background: var(--gold-gradient);
-  color: #3b0003;
+  background: var(--color-red-main);
+  color: var(--text-light);
+  padding: 12px;
   border: none;
-  padding: 15px;
-  font-size: 1rem;
+  border-radius: 6px;
   font-weight: 700;
-  letter-spacing: 1px;
-  border-radius: 30px;
+  font-size: 0.9rem;
   cursor: pointer;
-  transition: var(--transition-smooth);
-  box-shadow: 0 6px 20px rgba(245, 215, 127, 0.3);
-  margin-top: 10px;
+  transition: background 0.3s;
 }
 
 .submit-btn:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 10px 25px rgba(245, 215, 127, 0.5);
+  background: var(--color-red-deep);
 }
 
-/* Modal Thông Báo Cảm Ơn */
-.modal {
+/* Lightbox & Modal */
+.lightbox, .modal {
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.75);
-  display: flex;
-  align-items: center;
+  inset: 0;
+  background: rgba(0,0,0,0.85);
+  display: none;
   justify-content: center;
+  align-items: center;
   z-index: 10000;
-  opacity: 0;
-  visibility: hidden;
-  transition: all 0.3s ease;
-  padding: 20px;
 }
 
-.modal.show {
-  opacity: 1;
-  visibility: visible;
+.lightbox img {
+  max-width: 90%;
+  max-height: 80vh;
+  border-radius: 8px;
 }
 
 .modal-content {
-  background: var(--bg-card-red);
-  border: 2px solid var(--color-gold);
-  padding: 35px 25px;
-  border-radius: 14px;
-  max-width: 420px;
-  width: 100%;
+  background: #fff;
+  padding: 25px;
+  border-radius: 12px;
+  max-width: 360px;
   text-align: center;
-  transform: scale(0.85);
-  transition: transform 0.3s ease;
-  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.6);
-}
-
-.modal.show .modal-content {
-  transform: scale(1);
 }
 
 .modal-icon {
-  width: 55px;
-  height: 55px;
-  background: rgba(245, 215, 127, 0.15);
-  border-radius: 50%;
-  color: var(--color-gold);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin: 0 auto 15px;
-  font-size: 1.8rem;
+  font-size: 2.5rem;
+  color: #2e7d32;
+}
+
+.modal-title {
+  font-family: var(--font-title);
+  font-size: 1.6rem;
+  color: var(--text-dark);
+}
+
+.modal-text {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  margin: 8px 0 16px;
 }
 
 .modal-close-btn {
-  margin-top: 20px;
-  padding: 10px 25px;
-  background: var(--gold-gradient);
-  color: #3b0003;
+  background: var(--color-red-main);
+  color: #fff;
   border: none;
-  font-weight: 700;
-  border-radius: 20px;
+  padding: 8px 16px;
+  border-radius: 4px;
   cursor: pointer;
 }
 
 /* Footer */
 footer {
-  text-align: center;
-  padding: 40px 20px;
+  margin-top: 20px;
+  padding: 20px;
+  font-size: 0.85rem;
   color: var(--text-muted);
-  font-size: 0.9rem;
 }
 
 .footer-sig {
-  font-family: var(--font-title);
-  font-size: 1.8rem;
-  color: var(--color-gold-bright);
-  margin-bottom: 8px;
+  font-family: var(--font-script);
+  font-size: 2.2rem;
+  color: var(--color-red-main);
 }
 
-/* Floating Music Button */
-.music-btn {
-  position: fixed;
-  bottom: 25px;
-  right: 25px;
-  width: 48px;
-  height: 48px;
-  border-radius: 50%;
-  background: var(--bg-card-red);
-  border: 1.5px solid var(--color-gold);
-  color: var(--color-gold);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  z-index: 999;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
-  transition: var(--transition-smooth);
-}
-
-.music-btn.playing {
-  animation: spin 6s linear infinite;
-}
-
-@keyframes spin {
-  100% {
-    transform: rotate(360deg);
+/* ==========================================================================
+   8. RESPONSIVE DESIGN (CHI TIẾT MOBILE)
+   ========================================================================== */
+@media (max-width: 768px) {
+  .hero-card-container {
+    flex-direction: column;
   }
-}
 
-/* Lightbox Modal Xem Ảnh Lớn */
-.lightbox {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.92);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 10001;
-  opacity: 0;
-  visibility: hidden;
-  transition: all 0.3s ease;
-  padding: 20px;
-}
-.lightbox.active {
-  opacity: 1;
-  visibility: visible;
-}
-.lightbox img {
-  max-width: 90%;
-  max-height: 85vh;
-  border-radius: 8px;
-  border: 2px solid var(--color-gold);
-}
+  .hero-content-left {
+    padding: 25px 15px;
+  }
 
-@media (max-width: 600px) {
+  .hero-image-right {
+    width: 100%;
+    height: 230px;
+    min-height: auto;
+    border-top: 2px solid var(--color-gold);
+  }
+
   section {
-    padding: 35px 16px;
+    padding: 20px 12px;
   }
-  .door-frame {
-    height: 82vh;
-  }
-  .seal-title {
-    font-size: 1.8rem;
-  }
-  .section-title {
-    font-size: 1.9rem;
-  }
-  .time-box {
-    min-width: 60px;
-    padding: 10px 4px;
-  }
-  .time-val {
-    font-size: 1.4rem;
+
+  .title-script {
+    font-size: 3rem;
   }
 }
-
-.location-section {
-  margin-top: 40px;
-}
-
-.location-card {
-  background: rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(5px);
-  border: 1px solid rgba(255, 215, 0, 0.3);
-  border-radius: 16px;
-  padding: 30px 20px;
-  text-align: center;
-  max-width: 500px;
-  margin: 20px auto 0 auto;
-}
-
-.location-name {
-  font-size: 1.4rem;
-  color: #ffd700;
-  margin-bottom: 10px;
-  font-weight: bold;
-}
-
-.location-address {
-  font-size: 0.95rem;
-  color: #ffffff;
-  margin-bottom: 20px;
-  line-height: 1.5;
-}
-
-.map-btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  padding: 12px 24px;
-  background: linear-gradient(135deg, #ffe082, #c69214);
-  color: #5c0000;
-  font-weight: bold;
-  text-decoration: none;
-  border-radius: 25px;
-  transition: all 0.3s ease;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-}
-
-.map-btn:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(255, 215, 0, 0.4);
-}
-

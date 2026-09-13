@@ -4,16 +4,24 @@
 const INVITATION_CONFIG = {
   hostNames: "Ngọc Hoàng",
   eventDateTimeISO: "2026-09-19T17:30:00",
-  eventDateFormatted: "Thứ Bảy, 19/09/2026 (Nhằm 09/08 Âm lịch)",
-  eventTimeFormatted: "17:30 (5h30 chiều)",
+  
+  // Định dạng hiển thị tại Hero Section
+  heroTimeFormatted: "17 GIỜ 30 | THỨ BẢY",
+  heroDateFormatted: "NGÀY 19 THÁNG 09 NĂM 2026 (09/08 Âm Lịch)",
+  
+  // Định dạng hiển thị tại Grid Chi Tiết
+  gridDateFormatted: "Thứ Bảy, 19/09/2026 (09/08 Âm lịch)",
+  gridTimeFormatted: "17:30 (5h30 chiều)",
+  
   venueName: "Tổ Ấm Mới - Nhà Ngọc Hoàng",
-  venueAddress: "Thôn Mỹ Hòa xã Thu Bồn Đà Nẵng",
+  venueAddress: "Thôn Mỹ Hòa, xã Thu Bồn, Đà Nẵng",
   googleMapsUrl:
-    "https://www.google.com/maps/place/Nh%C3%A0+V%C4%83n+Ho%C3%A1+Th%C3%B4n+M%E1%BB%B9+Ho%C3%A0/@15.8282129,108.1054553,21z/data=!4m14!1m7!3m6!1s0x3142017a8afe1501:0xd0afa428a08ff26f!2zTmjDoCBWxINuIEhvw6EgVGjDtG4gTeG7uSBIb8Og!8m2!3d15.8282687!4d108.1056612!16s%2Fg%2F11h8z3fw9p!3m5!1s0x3142017a8afe1501:0xd0afa428a08ff26f!8m2!3d15.8282687!4d108.1056612!16s%2Fg%2F11h8z3fw9p?entry=ttu&g_ep=EgoyMDI2MDkwOS4wIKXMDSoASAFQAw%3D%3D",
-  defaultGuestName: "Quý Khách Hàng & Bạn Bè",
+    "https://www.google.com/maps/place/Nh%C3%A0+V%C4%83n+Ho%C3%A1+Th%C3%B4n+M%E1%BB%B9+Ho%C3%A0/@15.8282129,108.1054553,21z/data=!4m14!1m7!3m6!1s0x3142017a8afe1501:0xd0afa428a08ff26f!2zTmjDoCBWxINuIEhvw6EgVGjDtG4gTeG7uSBIb8Og!8m2!3d15.8282687!4d108.1056612!16s%2Fg%2F11h8z3fw9p!3m5!1s0x3142017a8afe1501:0xd0afa428a08ff26f!8m2!3d15.8282687!4d108.1056612!16s%2Fg%2F11h8z3fw9p?entry=ttu",
+  defaultGuestName: "QUÝ KHÁCH HÀNG & BẠN BÈ",
+  musicUrl: "https://assets.mixkit.co/music/preview/mixkit-peaceful-garden-536.mp3" // Link nhạc nền mặc định
 };
 
-// Hàm hỗ trợ gán text an toàn (tránh lỗi null)
+// Hàm hỗ trợ gán text an toàn (tránh lỗi ngắt script nếu thiếu ID)
 function safeSetText(id, value) {
   const el = document.getElementById(id);
   if (el) el.innerText = value;
@@ -23,35 +31,45 @@ function safeSetText(id, value) {
    B. KHỞI TẠO NỘI DUNG & ĐỌC LINK KHÁCH MỜI (?to=Tên_Khách)
    ========================================================================== */
 document.addEventListener("DOMContentLoaded", function () {
-  // Gán thông tin cấu hình vào giao diện (nếu thẻ tồn tại)
-  safeSetText("coverHostNames", INVITATION_CONFIG.hostNames);
-  safeSetText("mainHostNames", INVITATION_CONFIG.hostNames);
+  // 1. Gán thông tin cấu hình vào Section Hero
+  safeSetText("heroEventTime", INVITATION_CONFIG.heroTimeFormatted);
+  safeSetText("heroEventDate", INVITATION_CONFIG.heroDateFormatted);
+  safeSetText("heroEventVenue", INVITATION_CONFIG.venueName);
+  safeSetText("heroEventAddress", INVITATION_CONFIG.venueAddress);
+
+  // 2. Gán thông tin vào Grid Chi Tiết & Bản Đồ
+  safeSetText("gridEventDate", INVITATION_CONFIG.gridDateFormatted);
+  safeSetText("gridEventTime", INVITATION_CONFIG.gridTimeFormatted);
+  safeSetText("gridEventVenue", INVITATION_CONFIG.venueName);
+  safeSetText("mapEventAddress", INVITATION_CONFIG.venueAddress);
+
+  // 3. Gán thông tin Footer
   safeSetText("footerHostNames", INVITATION_CONFIG.hostNames);
 
-  safeSetText("eventDateText", INVITATION_CONFIG.eventDateFormatted);
-  safeSetText("eventTimeText", INVITATION_CONFIG.eventTimeFormatted);
-  safeSetText("eventVenueText", INVITATION_CONFIG.venueName);
-  safeSetText("eventAddressText", INVITATION_CONFIG.venueAddress);
-
+  // 4. Cập nhật link Google Maps
   const googleMapLink = document.getElementById("googleMapLink");
   if (googleMapLink) {
     googleMapLink.href = INVITATION_CONFIG.googleMapsUrl;
   }
 
-  // Lấy tên khách từ đường link ?to=Tên_Khách
+  // 5. Lấy tên khách từ đường link ?to=Tên_Khách hoặc ?guest=Tên_Khách
   const urlParams = new URLSearchParams(window.location.search);
   const guestParam = urlParams.get("to") || urlParams.get("guest");
 
   if (guestParam) {
     const decodedName = decodeURIComponent(guestParam);
-    safeSetText("guestNameDisplay", decodedName);
+    safeSetText("heroGuestName", decodedName.toUpperCase());
+    safeSetText("secGuestName", decodedName);
+
     const rsvpNameInput = document.getElementById("rsvpName");
     if (rsvpNameInput) rsvpNameInput.value = decodedName;
   } else {
-    safeSetText("guestNameDisplay", INVITATION_CONFIG.defaultGuestName);
+    safeSetText("heroGuestName", INVITATION_CONFIG.defaultGuestName);
+    safeSetText("secGuestName", INVITATION_CONFIG.defaultGuestName);
   }
 
-  // Khởi tạo các tính năng
+  // 6. Khởi tạo nhạc nền và các tính năng
+  initAudioElement();
   initDoorAndAudio();
   initCountdown();
   initScrollReveal();
@@ -60,9 +78,20 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 /* ==========================================================================
-   C. XỬ LÝ HIỆU ỨNG MỞ CỬA 3D & NHẠC NỀN
+   C. XỬ LÝ NHẠC NỀN & HIỆU ỨNG MỞ CỬA 3D
    ========================================================================== */
 let isPlaying = false;
+
+// Tự động tạo thẻ audio nếu chưa có trên HTML
+function initAudioElement() {
+  if (!document.getElementById("bgMusic")) {
+    const audio = document.createElement("audio");
+    audio.id = "bgMusic";
+    audio.loop = true;
+    audio.src = INVITATION_CONFIG.musicUrl;
+    document.body.appendChild(audio);
+  }
+}
 
 function playAudio() {
   const bgMusic = document.getElementById("bgMusic");
@@ -76,7 +105,7 @@ function playAudio() {
         if (musicBtn) musicBtn.classList.add("playing");
       })
       .catch((err) => {
-        console.log("Phát nhạc bị chặn bởi chính sách trình duyệt: ", err);
+        console.log("Trình duyệt chặn phát nhạc tự động: ", err);
       });
   }
 }
@@ -85,10 +114,10 @@ function initDoorAndAudio() {
   const doorOverlay = document.getElementById("doorOverlay");
   const musicBtn = document.getElementById("musicBtn");
 
-  // Click trực tiếp vào cửa để mở 3D
+  // Click vào cửa 3D để mở
   if (doorOverlay) {
     doorOverlay.addEventListener("click", function () {
-      doorOverlay.classList.add("opened");
+      doorOverlay.classList.add("closed"); // Khớp với class mở cửa trong CSS
       document.body.classList.remove("no-scroll");
       playAudio();
     });
@@ -97,7 +126,7 @@ function initDoorAndAudio() {
   // Nút bật/tắt nhạc thủ công
   if (musicBtn) {
     musicBtn.addEventListener("click", function (e) {
-      e.stopPropagation(); // Tránh kích hoạt click cửa
+      e.stopPropagation();
       const bgMusic = document.getElementById("bgMusic");
       if (!bgMusic) return;
 
@@ -131,9 +160,7 @@ function initCountdown() {
     }
 
     const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-    const hours = Math.floor(
-      (distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
-    );
+    const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
     const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
     const seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
@@ -148,7 +175,7 @@ function initCountdown() {
 }
 
 /* ==========================================================================
-   E. INTERSECTION OBSERVER SCROLL REVEAL
+   E. HIỆU ỨNG HIỂN THỊ KHI CUỘN TRANG (SCROLL REVEAL)
    ========================================================================== */
 function initScrollReveal() {
   const observer = new IntersectionObserver(
@@ -223,20 +250,24 @@ function initParticles() {
 }
 
 /* ==========================================================================
-   G. LIGHTBOX & FORM RSVP
+   G. LIGHTBOX SHOW ẢNH & FORM XÁC NHẬN RSVP
    ========================================================================== */
 function openLightbox(element) {
   const img = element.querySelector("img");
   const modal = document.getElementById("lightboxModal");
-  if (img && modal) {
-    document.getElementById("lightboxImg").src = img.src;
-    modal.classList.add("active");
+  const lightboxImg = document.getElementById("lightboxImg");
+
+  if (img && modal && lightboxImg) {
+    lightboxImg.src = img.src;
+    modal.style.display = "flex";
   }
 }
 
 function closeLightbox() {
   const modal = document.getElementById("lightboxModal");
-  if (modal) modal.classList.remove("active");
+  if (modal) {
+    modal.style.display = "none";
+  }
 }
 
 function initRSVPForm() {
@@ -266,8 +297,7 @@ function initRSVPForm() {
 
     const thankYouModal = document.getElementById("thankYouModal");
     if (thankYouModal) {
-      thankYouModal.classList.add("show");
-      thankYouModal.classList.add("active");
+      thankYouModal.style.display = "flex";
     }
 
     this.reset();
@@ -277,7 +307,6 @@ function initRSVPForm() {
 function closeModal() {
   const thankYouModal = document.getElementById("thankYouModal");
   if (thankYouModal) {
-    thankYouModal.classList.remove("show");
-    thankYouModal.classList.remove("active");
+    thankYouModal.style.display = "none";
   }
 }
