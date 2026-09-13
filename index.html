@@ -1,0 +1,400 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Thiệp Mời Tân Gia - Trân Trọng Kính Mời</title>
+
+    <!-- Google Fonts: Serif cổ điển sang trọng (Cormorant Garamond) & Sans-serif thanh lịch (Plus Jakarta Sans) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,400;1,600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body class="no-scroll">
+    <!-- HẠT KIM TUYẾN VÀNG RƠI NỀN -->
+    <canvas id="particle-canvas"></canvas>
+
+    <!-- ==========================================================================
+       SECTION 1: INTRO CÁNH CỬA MỜ 3D (DOUBLE DOOR INTRO OVERLAY)
+       ========================================================================== -->
+    <div class="door-overlay" id="doorOverlay">
+      <div class="door-frame">
+        <!-- Cánh cửa trái & phải -->
+        <div class="door door-left"></div>
+        <div class="door door-right"></div>
+
+        <!-- Khung niêm phong thông tin & Nút mở cửa ở giữa -->
+        <div class="door-seal" id="doorSeal">
+          <p class="seal-sub">THIỆP MỜI TÂN GIA</p>
+          <h1 class="seal-title" id="coverHostNames">Ngọc Hoàng</h1>
+          <p class="seal-hosts">Trân trọng kính mời</p>
+
+          <button class="open-door-btn" id="openDoorBtn">
+            <span>MỞ CỬA CHUNG VUI</span>
+           
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- NÚT PHÁT/TẮT NHẠC NỀN -->
+    <button class="music-btn" id="musicBtn" title="Bật/Tắt Nhạc Nền">
+      <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24">
+        <path
+          d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"
+        />
+      </svg>
+    </button>
+
+    <!-- <audio id="bgMusic" loop preload="auto">
+      <source
+        src="https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf07a.mp3?filename=soft-piano-108712.mp3"
+        type="audio/mpeg"
+      />
+    </audio> -->
+
+    <!-- ==========================================================================
+       SECTION BÊN TRONG THIỆP (MAIN CONTENT)
+       ========================================================================== -->
+    <div class="wrapper">
+      <!-- HERO SECTION -->
+      <section class="reveal hero-section">
+        <p class="hero-tag">WELCOME TO OUR NEW HOME</p>
+        <h2 class="section-subtitle">LỄ TÂN GIA / ĐÓN NHA MỚI</h2>
+        <h1 class="hero-hosts" id="mainHostNames">Ngọc Hoàng</h1>
+        <div class="ornament">
+          <span class="ornament-line"></span>
+          <span class="ornament-icon">✦</span>
+          <span class="ornament-line"></span>
+        </div>
+        <p class="hero-desc">
+          "Khởi đầu hành trình mới - An an thịnh vượng, vạn sự như ý"
+        </p>
+      </section>
+
+      <!-- SECTION 2: LỜI MỜI & TÊN KHÁCH MỜI -->
+      <section class="reveal">
+        <p class="section-subtitle">TRÂN TRỌNG KÍNH MỜI</p>
+        <h2 class="section-title">Chung Vui Cùng Gia Đình</h2>
+
+        <div class="ornament">
+          <span class="ornament-line"></span>
+          <span class="ornament-icon">❖</span>
+          <span class="ornament-line"></span>
+        </div>
+
+        <div class="invitation-guest-box">
+          <div class="guest-label">Trân trọng kính mời:</div>
+          <div class="guest-name" id="guestNameDisplay">
+            Quý Khách Hàng & Bạn Bè
+          </div>
+        </div>
+
+        <p class="invitation-text">
+          Sau thời gian tâm huyết kiến tạo và hoàn thiện, ngôi nhà mới của chúng
+          tôi đã chính thức hoàn thành. Gia đình hân hoan tổ chức buổi tiệc Tân
+          Gia thân mật để cùng chia sẻ niềm vui và ghi dấu kỷ niệm đáng nhớ này.
+          Sự hiện diện của quý vị là niềm vinh hạnh to lớn và là món quà vô giá
+          dành cho gia đình.
+        </p>
+      </section>
+
+      <!-- SECTION 3: THÔNG TIN SỰ KIỆN & ĐỒNG HỒ ĐẾM NGƯỢC -->
+      <section class="reveal">
+  <p class="section-subtitle">THỜI GIAN & ĐỊA ĐIỂM</p>
+  <h2 class="section-title">Thông Tin Buổi Tiệc</h2>
+
+  <div class="ornament">
+    <span class="ornament-line"></span>
+    <span class="ornament-icon">✦</span>
+    <span class="ornament-line"></span>
+  </div>
+
+  <!-- LỊCH THÁNG 9/2026 -->
+  <div class="calendar-card">
+    <div class="calendar-header">
+      <span class="cal-month">THÁNG 09</span>
+      <span class="cal-year">2026</span>
+    </div>
+    <div class="calendar-body">
+      <div class="calendar-weekdays">
+        <div>T2</div><div>T3</div><div>T4</div><div>T5</div><div>T6</div><div>T7</div><div>CN</div>
+      </div>
+      <div class="calendar-days">
+        <div class="empty"></div><div>1</div><div>2</div><div>3</div><div>4</div><div>5</div><div>6</div>
+        <div>7</div><div>8</div><div>9</div><div>10</div><div>11</div><div>12</div><div>13</div>
+        <div>14</div><div>15</div><div>16</div><div>17</div><div>18</div>
+        <div class="active-day">
+          <span class="day-num">19</span>
+          <span class="heart-mark">❤️</span>
+        </div>
+        <div>20</div>
+        <div>21</div><div>22</div><div>23</div><div>24</div><div>25</div><div>26</div><div>27</div>
+        <div>28</div><div>29</div><div>30</div><div class="empty"></div><div class="empty"></div><div class="empty"></div><div class="empty"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- GRID THÔNG TIN -->
+  <div class="details-grid">
+    <div class="detail-card">
+      <div class="detail-icon">
+        <svg width="22" height="22" fill="currentColor" viewBox="0 0 24 24"><path d="M19 4h-1V2h-2v2H8V2H6v2H5c-1.11 0-1.99.9-1.99 2L3 20c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 16H5V10h14v10zm0-12H5V6h14v2z"/></svg>
+      </div>
+      <div class="detail-title">NGÀY TỔ CHỨC</div>
+      <div class="detail-val" id="eventDateText">Thứ Bảy, 19/09/2026 (09/08 Âm lịch)</div>
+    </div>
+
+    <div class="detail-card">
+      <div class="detail-icon">
+        <svg width="22" height="22" fill="currentColor" viewBox="0 0 24 24"><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"/></svg>
+      </div>
+      <div class="detail-title">THỜI GIAN</div>
+      <div class="detail-val" id="eventTimeText">17:30 (5h30 chiều)</div>
+    </div>
+
+    <div class="detail-card">
+      <div class="detail-icon">
+        <svg width="22" height="22" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+      </div>
+      <div class="detail-title">ĐỊA ĐIỂM</div>
+      <div class="detail-val" id="eventVenueText">Villa SunShine</div>
+    </div>
+  </div>
+
+  <!-- COUNTDOWN -->
+  <div class="countdown-title">CÙNG ĐẾM NGƯỢC THỜI GIAN</div>
+  <div class="countdown-container">
+    <div class="time-box">
+      <div class="time-val" id="cdDays">00</div>
+      <div class="time-label">NGÀY</div>
+    </div>
+    <div class="time-box">
+      <div class="time-val" id="cdHours">00</div>
+      <div class="time-label">GIỜ</div>
+    </div>
+    <div class="time-box">
+      <div class="time-val" id="cdMinutes">00</div>
+      <div class="time-label">PHÚT</div>
+    </div>
+    <div class="time-box">
+      <div class="time-val" id="cdSeconds">00</div>
+      <div class="time-label">GIÂY</div>
+    </div>
+  </div>
+</section>
+<section class="reveal location-section">
+  <p class="section-subtitle">ĐƯỜNG ĐẾN BUỔI TIỆC</p>
+  <h2 class="section-title">Bản Đồ Chỉ Đường</h2>
+
+  <div class="ornament">
+    <span class="ornament-line"></span>
+    <span class="ornament-icon">✦</span>
+    <span class="ornament-line"></span>
+  </div>
+
+  <div class="location-card">
+    <h3 class="location-name">Nhà Của Hoàng</h3>
+    <p class="location-address" id="eventAddressText">
+      Số 88, Đường Hoa Lan, Khu đô thị Vinhomes, Q. Bình Thạnh, TP. Hồ Chí Minh
+    </p>
+
+    <!-- Nút Mở Google Maps -->
+    <a
+      href="https://maps.google.com/?q=Vinhomes+Central+Park"
+      id="googleMapLink"
+      target="_blank"
+      rel="noopener"
+      class="map-btn"
+    >
+      <svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24">
+        <path d="M20.5 3l-.16.03L15 5.1 9 3 3.36 4.9c-.21.07-.36.25-.36.48V20.5c0 .28.22.5.5.5l.16-.03L9 18.9l6 2.1 5.64-1.9c.21-.07.36-.25.36-.48V3.5c0-.28-.22-.5-.5-.5zM15 19l-6-2.11V5l6 2.11V19z"/>
+      </svg>
+      <span>XEM BẢN ĐỒ GOOGLE MAPS</span>
+    </a>
+  </div>
+</section>
+
+      <!-- SECTION 4: GALLERY ẢNH NGÔI NHÀ -->
+      <section class="reveal">
+        <p class="section-subtitle">OUR NEW HOME</p>
+        <h2 class="section-title">Không Gian Tổ Ấm</h2>
+
+        <div class="ornament">
+          <span class="ornament-line"></span>
+          <span class="ornament-icon">❖</span>
+          <span class="ornament-line"></span>
+        </div>
+
+        <div class="gallery-grid">
+          <div class="gallery-item" onclick="openLightbox(this)">
+            <img
+              src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=800&q=80"
+              alt="Phòng khách"
+            />
+            <div class="gallery-caption">Phòng Khách Ấm Cúng</div>
+          </div>
+          <div class="gallery-item" onclick="openLightbox(this)">
+            <img
+              src="https://images.unsplash.com/photo-1600566753376-12c8ab7fb75b?auto=format&fit=crop&w=800&q=80"
+              alt="Góc bếp"
+            />
+            <div class="gallery-caption">Góc Bếp Yêu Thương</div>
+          </div>
+          <div class="gallery-item" onclick="openLightbox(this)">
+            <img
+              src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=800&q=80"
+              alt="Sân vườn"
+            />
+            <div class="gallery-caption">Sân Vườn Xanh Mát</div>
+          </div>
+          <div class="gallery-item" onclick="openLightbox(this)">
+            <img
+              src="https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?auto=format&fit=crop&w=800&q=80"
+              alt="Ban công"
+            />
+            <div class="gallery-caption">Góc Thư Giãn Ban Công</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SECTION 5: LỜI TRI ÂN -->
+      <section class="reveal">
+        <p class="section-subtitle">GỬI TRỌN YÊU THƯƠNG</p>
+        <h2 class="section-title">Lời Tri Ân Từ Gia Chủ</h2>
+
+        <div class="ornament">
+          <span class="ornament-line"></span>
+          <span class="ornament-icon">✦</span>
+          <span class="ornament-line"></span>
+        </div>
+
+        <div class="host-quote">
+          "Ngôi nhà không chỉ được xây bằng gạch đá, mà còn được đắp xây bằng
+          tình yêu thương và sự gắn kết. Sự có mặt của quý khách chính là món
+          quà quý giá nhất đối với gia đình chúng tôi."
+        </div>
+      </section>
+
+      <!-- SECTION 6: FORM RSVP -->
+      <section class="reveal">
+        <p class="section-subtitle">XÁC NHẬN THAM DỰ</p>
+        <h2 class="section-title">Rsvp Form</h2>
+
+        <div class="ornament">
+          <span class="ornament-line"></span>
+          <span class="ornament-icon">❖</span>
+          <span class="ornament-line"></span>
+        </div>
+
+        <form class="rsvp-form" id="rsvpForm">
+          <div class="form-group">
+            <label class="form-label" for="rsvpName"
+              >Họ và tên của quý khách *</label
+            >
+            <input
+              type="text"
+              id="rsvpName"
+              class="form-input"
+              placeholder="Nhập họ và tên..."
+              required
+            />
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Xác nhận tham dự *</label>
+            <div class="radio-group">
+              <label class="radio-label">
+                <input
+                  type="radio"
+                  name="attendance"
+                  value="Sẽ tham dự"
+                  checked
+                />
+                Sẽ đến chung vui
+              </label>
+              <label class="radio-label">
+                <input
+                  type="radio"
+                  name="attendance"
+                  value="Rất tiếc vắng mặt"
+                />
+                Rất tiếc không thể đến
+              </label>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="rsvpGuests"
+              >Số lượng người đi cùng</label
+            >
+            <select id="rsvpGuests" class="form-select">
+              <option value="1">1 người (Chỉ mình tôi)</option>
+              <option value="2">2 người</option>
+              <option value="3">3 người</option>
+              <option value="4+">Đi cùng gia đình (4+ người)</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="rsvpWish"
+              >Lời chúc gửi tới gia chủ</label
+            >
+            <textarea
+              id="rsvpWish"
+              class="form-textarea"
+              rows="3"
+              placeholder="Gửi lời chúc mừng tân gia..."
+            ></textarea>
+          </div>
+
+          <button type="submit" class="submit-btn">GỬI XÁC NHẬN THAM DỰ</button>
+        </form>
+      </section>
+
+      <!-- FOOTER -->
+      <footer class="reveal">
+        <div class="footer-sig" id="footerHostNames">Ngọc Hoàng</div>
+        <p>Trân trọng cảm ơn & Rất hân hạnh được đón tiếp quý khách!</p>
+      </footer>
+    </div>
+
+    <!-- LIGHTBOX SHOW ẢNH LỚN -->
+    <div class="lightbox" id="lightboxModal" onclick="closeLightbox()">
+      <img id="lightboxImg" src="" alt="Ảnh phóng to" />
+    </div>
+
+    <!-- MODAL CẢM ƠN SAU KHI RSVP -->
+    <div class="modal" id="thankYouModal">
+      <div class="modal-content">
+        <div class="modal-icon">✓</div>
+        <h3
+          style="
+            font-family: var(--font-title);
+            font-size: 1.8rem;
+            color: var(--text-light);
+            margin-bottom: 8px;
+          "
+        >
+          Cảm Ơn Quý Khách!
+        </h3>
+        <p
+          style="color: var(--text-muted); font-size: 0.95rem"
+          id="thankYouMessage"
+        >
+          Gia đình đã nhận được phản hồi. Rất mong được đón tiếp quý khách!
+        </p>
+        <button class="modal-close-btn" onclick="closeModal()">
+          ĐÓNG THÔNG BÁO
+        </button>
+      </div>
+    </div>
+    
+    <!-- JAVASCRIPT XỬ LÝ SỰ KIỆN -->
+    <script src="script.js"></script>
+  </body>
+</html>
