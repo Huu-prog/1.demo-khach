@@ -47,6 +47,79 @@ body.no-scroll {
 /* ==========================================================================
    2. INTRO CÁNH CỬA 3D & NÚT PHÁT NHẠC
    ========================================================================== */
+   /* ==========================================================================
+   BẢNG THIỆP MỜI TRÊN CÁNH CỬA (INTRO BADGE CARD)
+   ========================================================================== */
+.door-badge-card {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 10;
+  width: 85%;
+  max-width: 320px;
+  padding: 30px 20px 25px;
+  background: linear-gradient(145deg, #6b0c18, #3b0007);
+  border: 2px solid var(--color-gold);
+  border-radius: 20px;
+  text-align: center;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6), inset 0 0 15px rgba(212, 175, 55, 0.2);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+  pointer-events: auto;
+}
+
+.badge-subtitle {
+  color: #f3e5ab;
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 2px;
+  margin-bottom: 8px;
+  text-transform: uppercase;
+}
+
+.badge-title {
+  color: #ffffff;
+  font-family: var(--font-title);
+  font-size: 2.2rem;
+  font-weight: 700;
+  margin-bottom: 4px;
+  line-height: 1.2;
+}
+
+.badge-script {
+  color: #f3e5ab;
+  font-family: var(--font-script);
+  font-size: 1.8rem;
+  margin-bottom: 22px;
+}
+
+.badge-btn {
+  width: 100%;
+  padding: 12px 20px;
+  background: linear-gradient(135deg, #f5d77f, #c5a059);
+  color: #3b0007;
+  font-family: var(--font-main);
+  font-weight: 700;
+  font-size: 0.95rem;
+  letter-spacing: 1px;
+  border: 1px solid #ffffff;
+  border-radius: 30px;
+  cursor: pointer;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+  transition: transform 0.2s ease, background 0.3s ease;
+}
+
+.badge-btn:hover {
+  transform: scale(1.03);
+  background: linear-gradient(135deg, #ffffff, #d4af37);
+}
+
+/* Hiệu ứng thu nhỏ & mờ dần bảng thiệp khi bấm mở cửa */
+.door-overlay.closed .door-badge-card {
+  opacity: 0;
+  transform: translate(-50%, -50%) scale(0.7);
+  pointer-events: none;
+}
 .door-overlay {
   position: fixed;
   inset: 0;
@@ -83,7 +156,7 @@ body.no-scroll {
 /* Cánh cửa bên trái */
 .door-left {
   transform-origin: left center;
-  background-image: url('https://i.pinimg.com/736x/a6/44/b8/a644b8ed3a9bd671423fccd174f18804.jpg');
+  background-image: url('https://i.pinimg.com/736x/e2/60/2e/e2602e5fe478a7ea5cbdc7e8abac3a14.jpg');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -99,7 +172,7 @@ body.no-scroll {
   content: "";
   position: absolute;
   inset: 0;
-  background-image: url('https://i.pinimg.com/736x/a6/44/b8/a644b8ed3a9bd671423fccd174f18804.jpg');
+  background-image: url('https://i.pinimg.com/736x/e2/60/2e/e2602e5fe478a7ea5cbdc7e8abac3a14.jpg');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
