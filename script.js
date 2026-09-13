@@ -13,11 +13,11 @@ const INVITATION_CONFIG = {
   gridDateFormatted: "Thứ Bảy, 19/09/2026 (09/08 Âm lịch)",
   gridTimeFormatted: "17:30 (5h30 chiều)",
   
-  venueName: "Tổ Ấm Mới - Nhà Ngọc Hoàng",
+  venueName: "Nhà Ngọc Hoàng",
   venueAddress: "Thôn Mỹ Hòa, xã Thu Bồn, Đà Nẵng",
   googleMapsUrl:
     "https://www.google.com/maps/place/Nh%C3%A0+V%C4%83n+Ho%C3%A1+Th%C3%B4n+M%E1%BB%B9+Ho%C3%A0/@15.8282129,108.1054553,21z/data=!4m14!1m7!3m6!1s0x3142017a8afe1501:0xd0afa428a08ff26f!2zTmjDoCBWxINuIEhvw6EgVGjDtG4gTeG7uSBIb8Og!8m2!3d15.8282687!4d108.1056612!16s%2Fg%2F11h8z3fw9p!3m5!1s0x3142017a8afe1501:0xd0afa428a08ff26f!8m2!3d15.8282687!4d108.1056612!16s%2Fg%2F11h8z3fw9p?entry=ttu",
-  defaultGuestName: "QUÝ KHÁCH HÀNG & BẠN BÈ",
+  defaultGuestName: "QUÝ KHÁCH & BẠN BÈ",
   musicUrl: "https://assets.mixkit.co/music/preview/mixkit-peaceful-garden-536.mp3" // Link nhạc nền mặc định
 };
 

@@ -71,20 +71,55 @@ body.no-scroll {
   perspective: 1200px;
 }
 
+/* Cấu hình chung cho cả 2 cánh cửa */
 .door {
   width: 50%;
   height: 100%;
-  background: linear-gradient(135deg, #4a000b, #2b0006);
-  border: 4px solid var(--color-gold);
+  border: 2px solid #2e5b39;
   position: relative;
   transition: transform 1.2s cubic-bezier(0.77, 0, 0.175, 1);
 }
 
-.door-left { transform-origin: left center; }
-.door-right { transform-origin: right center; }
+/* Cánh cửa bên trái */
+.door-left {
+  transform-origin: left center;
+  background-image: url('https://i.pinimg.com/736x/a6/44/b8/a644b8ed3a9bd671423fccd174f18804.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
 
-.door-overlay.closed .door-left { transform: rotateY(-100deg); }
-.door-overlay.closed .door-right { transform: rotateY(100deg); }
+/* Cánh cửa bên phải (Dùng ::before để lật ảnh đối xứng) */
+.door-right {
+  transform-origin: right center;
+  overflow: hidden;
+}
+
+.door-right::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: url('https://i.pinimg.com/736x/a6/44/b8/a644b8ed3a9bd671423fccd174f18804.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  transform: scaleX(-1); /* Lật gương cánh phải */
+  z-index: 1;
+}
+
+/* Tay nắm cửa luôn hiển thị trên cùng */
+.door-handle {
+  z-index: 2;
+}
+
+/* Hiệu ứng xoay mở cửa 3D */
+.door-overlay.closed .door-left { 
+  transform: rotateY(-100deg); 
+}
+
+.door-overlay.closed .door-right { 
+  transform: rotateY(100deg); 
+}
 
 .door-handle {
   position: absolute;
@@ -350,7 +385,7 @@ section {
   color: #333333;
   line-height: 1.7;
   max-width: 680px;
-  margin: 0 auto;
+  margin: 0 50px;
 }
 
 .host-quote {
@@ -401,6 +436,7 @@ section {
   color: var(--text-light);
   border-radius: 50%;
   font-weight: 700;
+
 }
 
 .heart-mark {
