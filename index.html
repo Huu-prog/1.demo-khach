@@ -18,28 +18,20 @@
     <!-- HẠT KIM TUYẾN VÀNG RƠI NỀN -->
     <canvas id="particle-canvas"></canvas>
 
-    <!-- ==========================================================================
-       SECTION 1: INTRO CÁNH CỬA MỜ 3D (DOUBLE DOOR INTRO OVERLAY)
-       ========================================================================== -->
-    <div class="door-overlay" id="doorOverlay">
-      <div class="door-frame">
-        <!-- Cánh cửa trái & phải -->
-        <div class="door door-left"></div>
-        <div class="door door-right"></div>
-
-        <!-- Khung niêm phong thông tin & Nút mở cửa ở giữa -->
-        <div class="door-seal" id="doorSeal">
-          <p class="seal-sub">THIỆP MỜI TÂN GIA</p>
-          <h1 class="seal-title" id="coverHostNames">Ngọc Hoàng</h1>
-          <p class="seal-hosts">Trân trọng kính mời</p>
-
-          <button class="open-door-btn" id="openDoorBtn">
-            <span>MỞ CỬA CHUNG VUI</span>
-           
-          </button>
-        </div>
-      </div>
+  <!-- ==========================================================================
+     SECTION 1: INTRO CÁNH CỬA MỜ 3D (DOUBLE DOOR INTRO OVERLAY)
+     ========================================================================== -->
+<div class="door-overlay" id="doorOverlay">
+  <div class="door-frame">
+    <!-- Cánh cửa trái & phải -->
+    <div class="door door-left">
+      <div class="door-handle left-handle"></div>
     </div>
+    <div class="door door-right">
+      <div class="door-handle right-handle"></div>
+    </div>
+  </div>
+</div>
 
     <!-- NÚT PHÁT/TẮT NHẠC NỀN -->
     <button class="music-btn" id="musicBtn" title="Bật/Tắt Nhạc Nền">
